@@ -1,0 +1,15 @@
+File Service
+Multer Library
+- ขึ้นโครง API 
+- รับการอัพโหลดไฟล์จาก frontend ได้
+- เก็บข้อมูลของไฟล์ ได้แก่ id, file name, path, file type, file size, timestamp 
+- สามารถ download file ด้วย id ได้ (เปลี่ยนชื่อไฟล์ตอน upload ให้เติม timestamp) 
+- สามารถ preview ไฟล์ด้วย id ได้ (ไฟล์รูปและไฟล์ pdf)
+- สามารถตั้งค่า limit upload file size ได้ (ใช้ api )
+- สามารถตั้งต่า path การเก็บไฟล์ได้ (ใช้ api )
+- Swagger
+
+====================================
+
+set maxSize ไปอยู่ใน  .env
+ปรับ size ให้อยู่ในหน่วย MB

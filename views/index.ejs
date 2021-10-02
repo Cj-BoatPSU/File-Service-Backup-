@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; 
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' http://www.google.com">
+    <meta charset="UTF-8">
+    <title>File Service System</title>
+</head>
+
+<body>
+    <h1>Upload Files</h1>
+
+    <!-- MULTIPLE FILES -->
+    <form action="/uploadfile" enctype="multipart/form-data" method="POST">
+        Select Files: <input type="file" name="myFiles" id="upload_input" multiple>
+        <button type="submit" width="250">Upload</button>
+        <button type="button" onClick="Reset_input()">Reset</button>
+    </form>
+
+    <h1>Download Files</h1>
+    <form action="" enctype="multipart/form-data" method="GET" onsubmit="return validateForm();" id="idfile-form">
+        <input type="text" id="id_file">
+        <button type="submit">download</button>
+    </form>
+    <h2>Upload File Size Config</h2>
+    <div>
+        <input type="text" id="limit_file_size" placeholder="MB Units">
+        <button type="button" onClick="ApiForConfigSize()">Config</button>
+        <button type="button" onClick="Reset_status()">Reset</button>
+    </div>
+    <p id="status_limit_file_size">Status</p>
+    <h2>Path Config</h2>
+    <div>
+        <input type="text" id="path_file">
+        <button type="button" onClick="ApiForConfigPath()">Config</button>
+        <button type="button" onClick="Reset_status()">Reset</button>
+    </div>
+    <p id="status_path_file">Status</p>
+    <script src="ejs.min.js"></script>
+    <script>
+        async function ApiForConfigSize() {
+            var status_limit_file_size = document.getElementById("status_limit_file_size");
+            var limit_file_size = document.getElementById("limit_file_size").value;
+            var tmp;
+            tmp = await fetch(`http://127.0.0.1:3001/filesizeconfig?param=${limit_file_size}`)
+                .then(function(response) {
+                    return response.text();
+                })
+                .catch(err => console.log('Request Failed', err));
+            status_limit_file_size.textContent = tmp;
+        }
+
+
+        async function ApiForConfigPath() {
+            var status_path_file = document.getElementById("status_path_file");
+            var path_file = document.getElementById("path_file").value;
+            var tmp;
+            tmp = await fetch(`http://127.0.0.1:3001/pathconfig?param=${path_file}`)
+                .then(function(response) {
+                    return response.text();
+                })
+                .catch(err => console.log('Request Failed', err));
+            status_path_file.textContent = tmp;
+        }
+
+
+        function Reset_status() {
+            document.getElementById("status_limit_file_size").textContent = "";
+            document.getElementById("status_path_file").textContent = "";
+        }
+
+
+        function Reset_input() {
+            document.getElementById("upload_input").value = "";
+            document.getElementById("id_file").value = "";
+        }
+
+
+        const options = {
+            method: "GET",
+            mode: 'cors',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }
+
+        function validateForm() {
+            var text = document.getElementById('id_file').value;
+            text = escape(text);
+            location.href = 'download?id_file=' + text;
+            return false;
+        }
+    </script>
+</body>
+
+
+</html>

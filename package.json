@@ -1,0 +1,21 @@
+{
+    "scripts": {
+        "move-static": "xcopy 'D:/Work/File Service/node_modules/@pdftron/pdfjs-express/public/' 'D:/Work/File Service/dist/public/pdfjsexpress'",
+        "build": "mybuildscript && npm run move-static"
+    },
+    "devDependencies": {
+        "copy-webpack-plugin": "^9.0.1",
+        "dotenv": "^10.0.0",
+        "mongoose": "^5.13.5",
+        "parcel-plugin-static-files-copy": "^2.6.0"
+    },
+    "staticFiles": {
+        "staticPath": [
+            {
+                "staticPath": "node_modules/@pdftron/pdfjs-express/public",
+                "staticOutDir": "public/pdfjsexpress"
+            }
+        ],
+        "watcherGlob": "**"
+    }
+}
